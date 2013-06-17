@@ -7,6 +7,7 @@
     <string name="battery_style_stock">Stock battery indicator</string>
     <string name="battery_style_circle">Circle battery with percentage</string>
     <string name="battery_style_percent">Large percent text</string>
+    <string name="battery_style_percent_stock">Large percent text with stock icon</string>
     <string name="battery_style_none">None</string>
 
     <string name="vol_music_controls_title">Volume keys skip track</string>
@@ -40,9 +41,6 @@
     <string name="recents_clear_all_title">Clear all recent tasks</string>
     <string name="recents_clear_all_summary">Enables button to clear all recent tasks at once in recent apps dialog</string>
 
-    <string name="pref_group_mods_title">Mods</string>
-    <string name="pref_group_fixes_title">Fixes - use only if needed</string>
-
     <string name="fix_datetime_crash_title">Fix Date&amp;Time settings crash</string>
     <string name="fix_datetime_crash_summary">Enable in case you experience crash while accessing Date&amp;Time settings (requires reboot)</string>
 
@@ -61,5 +59,70 @@
 
     <string name="caller_fullscreen_photo_title">Fullscreen caller photo</string>
     <string name="caller_fullscreen_photo_summary">Displays fullscreen caller photo on incoming call screen</string>
+
+    <!-- QuickSettings strings -->
+    <string name="quick_settings_sync_on">Sync on</string>
+    <string name="quick_settings_sync_off">Sync off</string>
+    <string name="quick_settings_wifi_ap_on">Wi-Fi AP on</string>
+    <string name="quick_settings_wifi_ap_off">Wi-Fi AP off</string>
+    <string name="quick_settings_torch_on">Torch on</string>
+    <string name="quick_settings_torch_off">Torch off</string>
+    <string name="quick_settings_torch_off_notif">Touch to turn off</string>
+
+    <!--  QuickSettings settings -->
+    <string name="quick_settings_title">Statusbar QuickSettings tiles</string>
+    <string name="quick_settings_summary">Allows to show or hide QuickSettings tiles in statusbar</string>
+    <string name="qs_tile_user_profile">User profile</string>
+    <string name="qs_tile_airplane_mode">Airplane mode</string>
+    <string name="qs_tile_battery">Battery status</string>
+    <string name="qs_tile_wifi">Wi-Fi</string>
+    <string name="qs_tile_bluetooth">Bluetooth</string>
+    <string name="qs_tile_gps">GPS</string>
+    <string name="qs_tile_mobile_data">Mobile data</string>
+    <string name="qs_tile_data_usage">Data usage</string>
+    <string name="qs_tile_audio">Audio profiles</string>
+    <string name="qs_tile_brightness">Brightness</string>
+    <string name="qs_tile_screen_timeout">Screen timeout</string>
+    <string name="qs_tile_autorotation">Auto rotation</string>
+    <string name="qs_tile_sync">Synchronization</string>
+    <string name="qs_tile_wifi_ap">Wi-Fi Access Point</string>
+    <string name="qs_tile_torch">Torch</string>
+    <string name="qs_tile_gravitybox">GravityBox</string>
+
+    <!-- Color Picker -->
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on Color to apply</string>
+
+    <!--  Statusbar background color -->
+    <string name="statusbar_bgcolor_title">Statusbar background color</string>
+    <string name="statusbar_bgcolor_summary">Allows to set statusbar background color and transparency</string>
+
+    <!--  Fix speech settings -->
+    <string name="fix_tts_settings_title">Fix speech settings</string>
+    <string name="fix_tts_settings_summary">Unlocks voice search and text-to-speech settings in Language&amp;Input (requires reboot)</string>
+
+    <!--  Advanced developer options -->
+    <string name="fix_dev_opts_title">Advanced developer options</string>
+    <string name="fix_dev_opts_summary">Unlocks advanced developer options (requires reboot)</string>
+
+    <!-- Main preference categories -->
+    <string name="pref_cat_statusbar_title">Statusbar tweaks</string>
+    <string name="pref_cat_statusbar_summary">Contains various statusbar tweaks</string>
+    <string name="pref_cat_misc_title">Miscellaneous tweaks</string>
+    <string name="pref_cat_misc_summary">Contains all other tweaks not falling into specific category</string>
+    <string name="pref_cat_fixes_title">General fixes</string>
+    <string name="pref_cat_fixes_summary">Contains general MTK6589 specific fixes. Use only if needed.</string>
+
+    <!-- About -->
+    <string name="pref_cat_about_title">About</string>
+    <string name="about_gb_summary">Coded by C3C076@XDA. Touch to visit official thread.</string>
+    <string name="about_xposed_title">Xposed framework</string>
+    <string name="about_xposed_summary">Coded by rovo89@XDA. Touch to visit official thread.</string>
+    <string name="about_donate_title">Donate</string>
+    <string name="about_donate_summary">Donate to me if you think this app is worth it! Also consider donating to rovo89 for his excellent Xposed framework.</string>
+
+    <!-- Reboot confirmation -->
+    <string name="reboot_confirm">Your phone will reboot</string>
+    <string name="reboot_confirm_recovery">Your phone will reboot into recovery</string>
 
 </resources>

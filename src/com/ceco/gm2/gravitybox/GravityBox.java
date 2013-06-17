@@ -24,6 +24,10 @@ public class GravityBox implements IXposedHookZygoteInit, IXposedHookInitPackage
             FixCallerIdPhone.initZygote(prefs);
 
         ModCallCard.initZygote();
+        ModStatusbarColor.initZygote();
+
+        if (prefs.getBoolean(GravityBoxSettings.PREF_KEY_FIX_DEV_OPTS, false))
+            FixDevOptions.initZygote();
     }
 
     @Override
@@ -66,5 +70,20 @@ public class GravityBox implements IXposedHookZygoteInit, IXposedHookInitPackage
 
         if (lpparam.packageName.equals(ModCallCard.PACKAGE_NAME))
             ModCallCard.init(prefs, lpparam.classLoader);
+
+        if (lpparam.packageName.equals(ModQuickSettings.PACKAGE_NAME))
+            ModQuickSettings.init(prefs, lpparam.classLoader);
+
+        if (lpparam.packageName.equals(ModStatusbarColor.PACKAGE_NAME))
+            ModStatusbarColor.init(prefs, lpparam.classLoader);
+
+        if (prefs.getBoolean(GravityBoxSettings.PREF_KEY_FIX_TTS_SETTINGS, false) &&
+                lpparam.packageName.equals(FixTtsSettings.PACKAGE_NAME)) {
+            FixTtsSettings.init(prefs, lpparam.classLoader);
+        }
+
+        if (prefs.getBoolean(GravityBoxSettings.PREF_KEY_FIX_DEV_OPTS, false) &&
+                lpparam.packageName.equals(FixDevOptions.PACKAGE_NAME))
+            FixDevOptions.init(prefs, lpparam.classLoader);
     }
 }

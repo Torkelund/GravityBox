@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory
-        android:title="@string/pref_group_mods_title">
+    <PreferenceScreen 
+        android:key="pref_cat_statusbar"
+        android:title="@string/pref_cat_statusbar_title"
+        android:summary="@string/pref_cat_statusbar_summary">
+
+        <MultiSelectListPreference 
+            android:key="pref_quick_settings"
+            android:title="@string/quick_settings_title"
+            android:summary="@string/quick_settings_summary" 
+            android:entries="@array/qs_tile_entries"
+            android:entryValues="@array/qs_tile_values"
+            android:defaultValue="@array/qs_tile_values" />
 
         <ListPreference
             android:key="pref_battery_style" 
@@ -11,12 +21,11 @@
             android:entryValues="@array/battery_style_values"
             android:defaultValue="1" />
 
-        <ListPreference
-            android:key="pref_low_battery_warning_policy"
-            android:title="@string/low_battery_warning_policy_title"
-            android:entries="@array/low_battery_warning_policy_entries"
-            android:entryValues="@array/low_battery_warning_policy_values"
-            android:defaultValue="3" />
+        <net.margaritov.preference.colorpicker.ColorPickerPreference 
+            android:key="pref_statusbar_bgcolor"
+            android:title="@string/statusbar_bgcolor_title" 
+            android:summary="@string/statusbar_bgcolor_summary"
+            android:defaultValue="@integer/COLOR_BLACK" />
 
         <MultiSelectListPreference
             android:key="pref_signal_icon_autohide"
@@ -24,6 +33,20 @@
             android:entries="@array/signal_icon_autohide_entries"
             android:entryValues="@array/signal_icon_autohide_values"
             android:defaultValue="@array/empty_array" />
+
+    </PreferenceScreen>
+
+    <PreferenceScreen 
+        android:key="pref_cat_misc"
+        android:title="@string/pref_cat_misc_title"
+        android:summary="@string/pref_cat_misc_summary">
+
+        <ListPreference
+            android:key="pref_low_battery_warning_policy"
+            android:title="@string/low_battery_warning_policy_title"
+            android:entries="@array/low_battery_warning_policy_entries"
+            android:entryValues="@array/low_battery_warning_policy_values"
+            android:defaultValue="3" />
 
         <CheckBoxPreference 
             android:key="pref_poweroff_advanced"
@@ -57,12 +80,14 @@
             android:summary="@string/caller_fullscreen_photo_summary"
             android:defaultValue="false" />
 
-    </PreferenceCategory>
+    </PreferenceScreen>
 
-    <PreferenceCategory 
-        android:title="@string/pref_group_fixes_title">
+    <PreferenceScreen 
+        android:key="pref_cat_fixes"
+        android:title="@string/pref_cat_fixes_title"
+        android:summary="@string/pref_cat_fixes_summary">
 
-        <CheckBoxPreference
+    <CheckBoxPreference
             android:key="pref_fix_datetime_crash"
             android:title="@string/fix_datetime_crash_title"
             android:summary="@string/fix_datetime_crash_summary"
@@ -86,5 +111,38 @@
             android:summary="@string/fix_calendar_summary"
             android:defaultValue="false" />
 
-    </PreferenceCategory>
+        <CheckBoxPreference
+            android:key="pref_fix_tts_settings"
+            android:title="@string/fix_tts_settings_title"
+            android:summary="@string/fix_tts_settings_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="pref_fix_dev_opts"
+            android:title="@string/fix_dev_opts_title"
+            android:summary="@string/fix_dev_opts_summary"
+            android:defaultValue="false" />
+
+    </PreferenceScreen>
+
+    <PreferenceScreen 
+        android:key="pref_cat_about"
+        android:title="@string/pref_cat_about_title">
+
+        <Preference
+            android:key="pref_about_gb" 
+            android:summary="@string/about_gb_summary" />
+
+        <Preference
+            android:key="pref_about_xposed"
+            android:title="@string/about_xposed_title"
+            android:summary="@string/about_xposed_summary" />"
+
+        <Preference
+            android:key="pref_about_donate"
+            android:title="@string/about_donate_title"
+            android:summary="@string/about_donate_summary" />
+
+    </PreferenceScreen>
+
 </PreferenceScreen>
