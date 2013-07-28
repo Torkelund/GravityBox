@@ -6,8 +6,7 @@
     <string name="battery_style_title">Style de l\'indicateur de batterie</string>	
     <string name="battery_style_stock">Incateur par défaut</string>
     <string name="battery_style_circle">Cercle avec pourcentage</string>
-    <string name="battery_style_percent">Texte uniquement</string>
-    <string name="battery_style_percent_stock">Texte et indicateur par défaut</string>
+    <string name="battery_style_percent">Batterie avec pourcentage</string>
     <string name="battery_style_none">Aucun</string>
 
     <string name="vol_music_controls_title">Touches de volume et pistes audio</string>
@@ -45,7 +44,7 @@
     <string name="fix_datetime_crash_summary">Activer si vous constatez un plantage lorsque vous accédez au paramètre Date et heure (redémarrage nécessaire)</string>
 
     <string name="fix_caller_id_phone_title">Identification de l\'appelant en téléphonie</string>
-    <string name="fix_caller_id_phone_summary">Activer si vous constatez qu\'un contact enregistré n\'est pas identifié lord d\'un appel entrant (redémarrage nécessaire)</string>
+    <string name="fix_caller_id_phone_summary">Activer si vous constatez qu\'un contact enregistré n\'est pas identifié lors d\'un appel entrant (redémarrage nécessaire)</string>
     <string name="fix_caller_id_phone_alert">Après redémarrage, vous devrez supprimer puis ajouter de nouveau vos contacts pour que le changement prenne effet. Allez dans Paramètres / Applications / Toutes / Liste des contacts / Effacer les données</string>
 
     <string name="fix_caller_id_mms_title">Identification de l\'émetteur d\'un message</string>
@@ -68,6 +67,11 @@
     <string name="quick_settings_torch_on">Torche on</string>
     <string name="quick_settings_torch_off">Torche off</string>
     <string name="quick_settings_torch_off_notif">Toucher pour éteindre</string>
+    <string name="quick_settings_qr_playing">Lecture&#8230;</string>
+    <string name="quick_settings_qr_recording">Enregistrement&#8230;</string>
+    <string name="quick_settings_qr_recorded">Enregistré</string>
+    <string name="quick_settings_qr_record">Appui long pour enregistrer</string>
+    <string name="quick_settings_qr_recording_notif">Touchez pour stopper l\'enregistrement</string>
 
     <!--  QuickSettings settings -->
     <string name="quick_settings_title">Gestion des paramètres rapides</string>
@@ -89,6 +93,8 @@
     <string name="qs_tile_wifi_ap">Hotspot Wi-Fi</string>
     <string name="qs_tile_torch">Torche</string>
     <string name="qs_tile_gravitybox">GravityBox</string>
+    <string name="qs_tile_sleep">Veille</string>
+    <string name="qs_tile_quickrecord">Enregistrement rapide</string>
     
     <!-- Color Picker -->
     <string name="dialog_color_picker">Sélecteur de couleur</string>
@@ -231,6 +237,7 @@
     <string name="hwkey_action_voice_search">Recherche vocale</string>
     <string name="hwkey_action_prev_app">Revenir à la précédente appli</string>
     <string name="hwkey_action_kill">Fin de tâche appli en cours</string>
+    <string name="hwkey_action_sleep">Mettre en veille</string>
     <string name="pref_hwkey_kill_delay_title">Délai appui long fin de tâche</string>
     <string name="pref_hwkey_kill_delay_summary">Valable pour mettre fin à l\'application de premier plan. Définit combien de temps la touche doit être pressée pour mettre fin à la tâche</string>
     <string name="pref_hwkey_doubletap_speed_title">Vitesse double appui</string>
@@ -256,5 +263,16 @@
 
     <!-- Soft reboot -->
     <string name="reboot_soft">Redémarrage logiciel</string>
+
+    <!--  Solid black Holo background -->
+    <string name="pref_holo_bg_solid_black_title">Arrière-plan noir uni</string>
+    <string name="pref_holo_bg_solid_black_summary">Utiliser un arrière-plan noir uni pour le thème Holo par défaut au lieu du dégradé noir-gris (nécessite un redémarrage)</string>
+
+    <!-- QuickSettings tiles per row -->
+    <string name="pref_qs_tiles_per_row_title">Touches par rangée</string>
+    <string name="pref_qs_tiles_per_row_summary">Définit le nombre de touches de paramètres rapides à afficher par rangée. Les touches seront redimensionnées en conséquence</string>
+
+    <!--  Status bar clock - show day of week -->
+    <string name="pref_statusbar_clock_dow_title">Afficher le jour de la semaine</string>
 
 </resources>
