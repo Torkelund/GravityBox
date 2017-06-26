@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2013 Peter Gregus for GravityBox Project (C3C076@xda)
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.ceco.gm2.gravitybox;
 
 import android.app.Notification;
@@ -6,6 +21,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.os.IBinder;
 
@@ -74,10 +90,11 @@ public class TorchService extends Service {
             Camera.Parameters camParams = mCamera.getParameters();
             camParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             mCamera.setParameters(camParams);
+            mCamera.setPreviewTexture(new SurfaceTexture(0));
             mCamera.startPreview();
 
             mTorchStatus = TORCH_STATUS_ON;
-            startForeground(1, mTorchNotif);
+            startForeground(2, mTorchNotif);
         } catch (Exception e) {
             mTorchStatus = TORCH_STATUS_ERROR;
             e.printStackTrace();

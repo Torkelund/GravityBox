@@ -1,13 +1,33 @@
+/*
+ * Copyright (C) 2013 Peter Gregus for GravityBox Project (C3C076@xda)
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.ceco.gm2.gravitybox;
 
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.Settings;
 
 public class WifiManagerWrapper {
@@ -31,9 +51,14 @@ public class WifiManagerWrapper {
     private WifiManager mWifiManager;
     private WifiApStateChangeListener mApStateChangeListener;
     private BroadcastReceiver mApStateChangeReceiver;
+    private WifiStateChangeListener mWifiStateChangeListener;
 
     public interface WifiApStateChangeListener {
         void onWifiApStateChanged(int wifiApState);
+    }
+
+    public interface WifiStateChangeListener {
+        void onWifiStateChanging(boolean enabling);
     }
 
     public WifiManagerWrapper(Context context, WifiApStateChangeListener listener) {
@@ -51,6 +76,12 @@ public class WifiManagerWrapper {
 
         mApStateChangeListener = listener;
         registerApStateChangeReceiver();
+    }
+
+    public void setWifiStateChangeListener(WifiStateChangeListener listener) {
+        if (listener != null) {
+            mWifiStateChangeListener = listener;
+        }
     }
 
     private void registerApStateChangeReceiver() {
@@ -83,44 +114,89 @@ public class WifiManagerWrapper {
         return (Integer) XposedHelpers.callMethod(mWifiManager, "getWifiApState");
     }
 
+    public String getWifiSsid() {
+        WifiInfo wifiInfo = mWifiManager.getConnectionInfo();
+        return (wifiInfo == null ? null : wifiInfo.getSSID());
+    }
+
     public boolean isWifiEnabled() {
         return mWifiManager.isWifiEnabled();
     }
 
     public void setWifiEnabled(boolean enable) {
+        if (mWifiStateChangeListener != null) {
+            mWifiStateChangeListener.onWifiStateChanging(enable);
+        }
         mWifiManager.setWifiEnabled(enable);
+    }
+
+    public void toggleWifiEnabled() {
+        final boolean enable = 
+                (getWifiState() != WifiManagerWrapper.WIFI_STATE_ENABLED);
+        new AsyncTask<Void,Void,Void>() {
+            @Override
+            protected Void doInBackground(Void... args) {
+                final int wifiApState = getWifiApState();
+                if (enable && (wifiApState == WifiManagerWrapper.WIFI_AP_STATE_ENABLING
+                               || wifiApState == WifiManagerWrapper.WIFI_AP_STATE_ENABLED)) {
+                    setWifiApEnabled(false);
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void args) {
+                setWifiEnabled(enable);
+            }
+        }.execute();
     }
 
     public boolean isWifiApEnabled() {
         return (getWifiApState() == WIFI_AP_STATE_ENABLED);
     }
 
+    @SuppressLint("NewApi")
     public void setWifiApEnabled(boolean enable) {
-        final ContentResolver cr = mContext.getContentResolver();
+        try {
+            final ContentResolver cr = mContext.getContentResolver();
 
-        int wifiState = getWifiState(); 
-        if (enable && (wifiState == WIFI_STATE_ENABLING ||
-                wifiState == WIFI_STATE_ENABLED)) {
-            setWifiEnabled(false);
-            Settings.Global.putInt(cr, WIFI_SAVED_STATE, 1);
-        }
-
-        Class<?>[] paramArgs = new Class<?>[2];
-        paramArgs[0] = WifiConfiguration.class;
-        paramArgs[1] = boolean.class;
-        XposedHelpers.callMethod(mWifiManager, "setWifiApEnabled", paramArgs, null, enable);
-
-        if (!enable) {
-            int wifiSavedState = 0;
-            try {
-                wifiSavedState = Settings.Global.getInt(cr, WIFI_SAVED_STATE);
-            } catch (Settings.SettingNotFoundException e) {
-                //
+            int wifiState = getWifiState(); 
+            if (enable && (wifiState == WIFI_STATE_ENABLING ||
+                    wifiState == WIFI_STATE_ENABLED)) {
+                setWifiEnabled(false);
+                if (Build.VERSION.SDK_INT > 16) {
+                    Settings.Global.putInt(cr, WIFI_SAVED_STATE, 1);
+                } else {
+                    Settings.Secure.putInt(cr, WIFI_SAVED_STATE, 1);
+                }
             }
-            if (wifiSavedState == 1) {
-                setWifiEnabled(true);
-                Settings.Global.putInt(cr, WIFI_SAVED_STATE, 0);
+
+            Class<?>[] paramArgs = new Class<?>[2];
+            paramArgs[0] = WifiConfiguration.class;
+            paramArgs[1] = boolean.class;
+            XposedHelpers.callMethod(mWifiManager, "setWifiApEnabled", paramArgs, null, enable);
+
+            if (!enable) {
+                int wifiSavedState = 0;
+                try {
+                    if (Build.VERSION.SDK_INT > 16) {
+                        wifiSavedState = Settings.Global.getInt(cr, WIFI_SAVED_STATE);
+                    } else {
+                        wifiSavedState = Settings.Secure.getInt(cr, WIFI_SAVED_STATE);
+                    }
+                } catch (Settings.SettingNotFoundException e) {
+                    //
+                }
+                if (wifiSavedState == 1) {
+                    setWifiEnabled(true);
+                    if (Build.VERSION.SDK_INT > 16) {
+                        Settings.Global.putInt(cr, WIFI_SAVED_STATE, 0);
+                    } else {
+                        Settings.Secure.putInt(cr, WIFI_SAVED_STATE, 0);
+                    }
+                }
             }
+        } catch (Throwable t) {
+            XposedBridge.log(t);
         }
     }
 }

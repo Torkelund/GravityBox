@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2013 Peter Gregus for GravityBox Project (C3C076@xda)
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.ceco.gm2.gravitybox.preference;
 
 import java.util.ArrayList;
@@ -10,6 +25,7 @@ import com.ceco.gm2.gravitybox.R;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.DialogPreference;
@@ -22,6 +38,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AutoBrightnessDialogPreference extends DialogPreference 
@@ -35,11 +52,14 @@ public class AutoBrightnessDialogPreference extends DialogPreference
     private EditText mTxtLux;
     private EditText mTxtBrightness;
     private Button mBtnSet;
+    private int mBrightnessMin;
 
     public AutoBrightnessDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setDialogLayoutResource(R.layout.dlgpref_autobrightness);
+
+        mBrightnessMin = context.getResources().getInteger(R.integer.screen_brightness_min);
 
         mReceiver = new GravityBoxResultReceiver(new Handler());
         mReceiver.setReceiver(this);
@@ -52,6 +72,13 @@ public class AutoBrightnessDialogPreference extends DialogPreference
 
         mTxtLux = (EditText) view.findViewById(R.id.txtLux);
         mTxtBrightness = (EditText) view.findViewById(R.id.txtBrightness);
+
+        TextView label = (TextView) view.findViewById(R.id.label2);
+        if (label != null) {
+            label.setText(String.format(
+                    getContext().getString(R.string.pref_ab_brighness_label),
+                    mBrightnessMin));
+        }
 
         mBtnSet = (Button) view.findViewById(R.id.btnSet);
         mBtnSet.setOnClickListener(this);
@@ -177,11 +204,12 @@ public class AutoBrightnessDialogPreference extends DialogPreference
         try {
             lux = Integer.valueOf(mTxtLux.getText().toString());
             brightness = Integer.valueOf(mTxtBrightness.getText().toString());
-            if (lux < 0) {
+            if (lux <= 0) {
                 Toast.makeText(getContext(), R.string.pref_ab_number_error_negative, Toast.LENGTH_LONG).show();
                 return;
-            } else if (brightness < 20) {
-                Toast.makeText(getContext(), R.string.pref_ab_brightness_too_low, Toast.LENGTH_LONG).show();
+            } else if (brightness < mBrightnessMin) {
+                String msg = String.format(getContext().getString(R.string.pref_ab_brightness_too_low), mBrightnessMin);
+                Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
                 return;
             } else if (brightness > 255) {
                 Toast.makeText(getContext(), R.string.pref_ab_brightness_too_high, Toast.LENGTH_LONG).show();

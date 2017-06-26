@@ -1,7 +1,5 @@
 GravityBox
 ==========
 
-XPosed Tweak Box for MTK6589 devices running Android 4.2.1
-
-Visit official thread at XDA for more info:
-http://forum.xda-developers.com/showthread.php?t=2316070
+This repository is deprecated.
+Official one is maintained under [GravityBox organization](https://github.com/GravityBox/GravityBox)
